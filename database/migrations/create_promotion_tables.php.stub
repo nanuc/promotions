@@ -27,6 +27,7 @@ class CreatePromotionTables extends Migration
             $table->string('region')->nullable();
             $table->string('zip')->nullable();
             $table->string('country')->nullable();
+            $table->json('additional_data')->nullable();
             $table->timestamps();
         });
 

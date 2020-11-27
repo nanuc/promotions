@@ -1,6 +1,6 @@
 <?php
 
-namespace Nanuc\Promotions;
+namespace Nanuc\Promotions\Generators;
 
 use Illuminate\Support\Str;
 use Nanuc\Promotions\Models\Promotion;
