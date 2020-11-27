@@ -2,12 +2,11 @@
 
 namespace Nanuc\Promotions;
 
-use Nanuc\Helpers\View\Components\Tabs\TabContent;
-use Nanuc\Helpers\View\Components\Tabs\TabLink;
-use Nanuc\Helpers\View\Components\Tabs\Tabs;
 use Illuminate\Support\ServiceProvider;
-use Nanuc\Helpers\View\Components\DateTime;
-use Nanuc\Helpers\View\Components\HelpscoutBeacon;
+use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
+use Nanuc\Promotions\Http\Controllers\LandingPageController;
+use Nanuc\Promotions\Http\Livewire\RedeemCode;
 
 class PromotionsServiceProvider extends ServiceProvider
 {
@@ -18,8 +17,19 @@ class PromotionsServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/create_promotion_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_promotion_tables.php'),
+            __DIR__.'/../database/migrations/create_promotion_tables.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_promotion_tables.php'),
         ], 'migrations');
+
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/promotions'),
+        ]);
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'promotions');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'promotions');
+
+        Route::get(config('promotions.landing-page.url.prefix') . '{promotion}', LandingPageController::class);
+
+        Livewire::component('redeem-code', RedeemCode::class);
     }
 
     public function register()
