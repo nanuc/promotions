@@ -17,7 +17,7 @@ class Promotion extends Model
         return config('promotions.views.path') . '/' . Str::kebab($this->getName());
     }
 
-    protected function getName()
+    public function getName()
     {
         return (new \ReflectionClass($this->getHandler()))->getShortName();
     }

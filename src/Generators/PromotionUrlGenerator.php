@@ -9,6 +9,6 @@ class PromotionUrlGenerator
 {
     public function createUrl(Promotion $promotion)
     {
-        return Str::kebab($promotion->name);
+        return Str::kebab($promotion->getName());
     }
 }

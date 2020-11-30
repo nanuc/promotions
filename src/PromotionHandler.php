@@ -24,7 +24,7 @@ abstract class PromotionHandler
         return view($this->getPromotion()->getView());
     }
 
-    protected function getPromotion()
+    public function getPromotion()
     {
         $promotion = Promotion::firstOrCreate([
             'handler' => get_class($this)
