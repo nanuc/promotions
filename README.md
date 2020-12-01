@@ -56,6 +56,17 @@ You can either prepare the Excel file before importing, or write a command that 
 Excel::import(new PromotionReceiversImport, 'path/to/excel/file');
 ```
 
+### Add trait to your promotionables
+You can add the `HasPromotions` trait to your models and use methods like `isMemberOfPromotion`.
+```php
+use Nanuc\Promotions\Traits\HasPromotions;
+
+class Team extends Model
+{
+    use HasPromotions;
+}
+```
+
 ### Add receivers to a promotion
 You add existing receivers to a promotion with `addReceiver`. Any receiver will receive an individual promotion code.
 ```php
