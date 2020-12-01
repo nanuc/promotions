@@ -14,9 +14,9 @@ abstract class PromotionHandler
         return new static;
     }
 
-    public function addReceivers()
+    public function addReceivers($receivers)
     {
-        return $this->getPromotion();
+        $receivers->each->createCodeForPromotion($this->getPromotion());
     }
 
     public function handleLandingPage()
@@ -32,10 +32,16 @@ abstract class PromotionHandler
 
         if($promotion->wasRecentlyCreated) {
             $urlGeneratorClassName = config('promotions.landing-page.url.generator');
+
             $promotion->url = (new $urlGeneratorClassName)->createUrl($promotion);
             $promotion->save();
         }
 
         return $promotion;
+    }
+
+    public function exportAsFlyeralarmData($path = 'flyeralarm.xlsx', $disk = null)
+    {
+        $this->getPromotion()->exportAsFlyeralarmData($path = 'flyeralarm.xlsx', $disk = null);
     }
 }

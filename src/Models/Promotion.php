@@ -4,12 +4,14 @@ namespace Nanuc\Promotions\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use Nanuc\Promotions\Exports\FlyeralarmAddressExport;
 
 class Promotion extends Model
 {
-    public static function byUrl($url) : Promotion
+    public function promotionCodes()
     {
-        return self::where('url', $url)->firstOrFail();
+        return $this->hasMany(PromotionCode::class);
     }
 
     public function getView()
@@ -26,5 +28,15 @@ class Promotion extends Model
     {
         $handlerClassName = $this->handler;
         return new $handlerClassName;
+    }
+
+    public function exportAsFlyeralarmData($path = 'flyeralarm.xlsx', $disk = null)
+    {
+        Excel::store(new FlyeralarmAddressExport($this), $path, $disk);
+    }
+
+    public static function byUrl($url) : Promotion
+    {
+        return self::where('url', $url)->firstOrFail();
     }
 }

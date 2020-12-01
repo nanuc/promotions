@@ -10,6 +10,11 @@ class PromotionCode extends Model
         'redeemed_at' => 'datetime',
     ];
 
+    public function promotionReceiver()
+    {
+        return $this->belongsTo(PromotionReceiver::class);
+    }
+
     public function promotion()
     {
         return $this->belongsTo(Promotion::class);

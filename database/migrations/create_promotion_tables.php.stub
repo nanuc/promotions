@@ -35,7 +35,8 @@ class CreatePromotionTables extends Migration
             $table->id();
             $table->unsignedInteger('promotion_id')->index();
             $table->unsignedInteger('promotion_receiver_id')->index();
-            $table->morphs('promotionable');
+            $table->string('promotionable_type')->index()->nullable();
+            $table->unsignedInteger('promotionable_id')->index()->nullable();
             $table->string('code');
             $table->dateTime('redeemed_at')->nullable();
             $table->timestamps();

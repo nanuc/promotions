@@ -23,7 +23,7 @@ namespace App\Lib\Promotions;
 
 use Nanuc\Promotions\PromotionHandler;
 
-class Promotion2021StartsNow extends PromotionHandler
+class Promotion2021 extends PromotionHandler
 {
 
 }
@@ -37,7 +37,7 @@ public function handleLandingPage()
     return 'You have reached the landing page!';
 }
 ```
-By default the package will look for a view in `resources/views/promotions/` (see config) with the name of the promotion, e.g. `promotion2021-starts-now`.
+By default the package will look for a view in `resources/views/promotions/` (see config) with the name of the promotion, e.g. `promotion2021`.
 The view name is the name of the promotion in kebab case.
 
 ### Redeeming a code
@@ -54,6 +54,19 @@ You can import Excel files. All columns in table `promotion_receivers` will be r
 You can either prepare the Excel file before importing, or write a command that migrates the data from `additional_data` into the other columns.
 ```php
 Excel::import(new PromotionReceiversImport, 'path/to/excel/file');
+```
+
+### Add receivers to a promotion
+You add existing receivers to a promotion with `addReceiver`. Any receiver will receive an individual promotion code.
+```php
+$receivers = PromotionReceiver::all();
+Promotion2021::make()->addReceivers($receivers);
+```
+
+### Exporting to Flyeralarm Dialogpost
+You can export Excel files in the format needed by Flyeralarm to create Dialogpost mailings.
+```php
+Promotion2021::make()->exportAsFlyeralarmData('path/to/file', 'disk');
 ```
 
 ## Configuration

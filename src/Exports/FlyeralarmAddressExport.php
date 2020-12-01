@@ -6,22 +6,24 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Nanuc\Promotions\Models\Promotion;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class FlyeralarmAddressExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
-    protected $promotionReceivers;
+    protected $promotion;
 
-    public function __construct($promotionReceivers)
+    public function __construct(Promotion $promotion)
     {
-        $this->promotionReceivers = $promotionReceivers;
+        $this->promotion = $promotion;
     }
 
     public function collection()
     {
-        return $this->promotionReceivers
-            ->map(function($promotionReceiver) {
+        return $this->promotion->promotionCodes
+            ->map(function($promotionCode) {
+                $promotionReceiver = $promotionCode->promotionReceiver;
                 return [
                     $promotionReceiver->name,
                     '',
@@ -36,6 +38,7 @@ class FlyeralarmAddressExport implements FromCollection, WithHeadings, ShouldAut
                     $promotionReceiver->locality,
                     $promotionReceiver->country,
                     '',
+                    $promotionCode->code,
                 ];
             });
     }
@@ -43,7 +46,7 @@ class FlyeralarmAddressExport implements FromCollection, WithHeadings, ShouldAut
     public function headings(): array
     {
         return [
-            ['Firma', 'Firma Zusatz', 'Anrede', 'Titel', 'Vorname', 'Nachname', 'Strasse', 'Hausnummer', 'Postfach', 'PLZ',	'Ort', 'Land', 'Briefanrede'],
+            ['Firma', 'Firma Zusatz', 'Anrede', 'Titel', 'Vorname', 'Nachname', 'Strasse', 'Hausnummer', 'Postfach', 'PLZ',	'Ort', 'Land', 'Briefanrede', 'Promotion-Code'],
         ];
     }
 }
