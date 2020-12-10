@@ -30,6 +30,24 @@ class Promotion extends Model
         return new $handlerClassName;
     }
 
+    public function getUTMData($campaign = null, $source = null, $medium = null, $term = null, $content = null)
+    {
+        $utmData = [
+            'utm_campaign' => $campaign ?? Str::kebab($this->getName()),
+            'utm_source' => $source ?? 'newsletter',
+            'utm_medium' => $medium ?? 'email',
+        ];
+
+        if($term) {
+            $utmData['utm_term'] = $term;
+        }
+        if($content) {
+            $utmData['utm_content'] = $content;
+        }
+
+        return $utmData;
+    }
+
     public function exportAsFlyeralarmData($path = 'flyeralarm.xlsx', $disk = null)
     {
         Excel::store(new FlyeralarmAddressExport($this), $path, $disk);
