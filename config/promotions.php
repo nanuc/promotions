@@ -12,5 +12,8 @@ return [
     ],
     'promotion-code' => [
         'generator' => \Nanuc\Promotions\Generators\PromotionCodeGenerator::class,
+    ],
+    'promotion-url-identifier' => [
+        'generator' => \Nanuc\Promotions\Generators\PromotionUrlIdentifierGenerator::class,
     ]
 ];

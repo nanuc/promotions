@@ -37,4 +37,11 @@ class PromotionCode extends Model
 
         return $this->promotion->getHandler()->redeemCode($this);
     }
+
+    public function generateUrlIdentifier()
+    {
+        $urlIdentifierGeneratorClassName = config('promotions.promotion-url-identifier.generator');
+        $this->url_identifier = (new $urlIdentifierGeneratorClassName)->createUrlIdentifier();
+        $this->save();
+    }
 }
