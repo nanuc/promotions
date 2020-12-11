@@ -3,6 +3,7 @@
 namespace Nanuc\Promotions\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Nanuc\Promotions\Exceptions\PromotionCodeIsAlreadyRedeemedException;
 
 class PromotionCode extends Model
 {
@@ -32,6 +33,10 @@ class PromotionCode extends Model
 
     public function redeem()
     {
+        if($this->isAlreadyRedeemed) {
+            throw new PromotionCodeIsAlreadyRedeemedException('Promotion code ' . $this->code . ' is already redeemed.');
+        }
+
         $this->redeemed_at = now();
         $this->save();
 
