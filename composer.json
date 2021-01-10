@@ -7,7 +7,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "ext-json": "*",
         "maatwebsite/excel": "^3.1",
         "livewire/livewire": "^2.3"
